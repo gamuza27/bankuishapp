@@ -13,11 +13,9 @@ import com.example.meliapp.repositories.ItemRepository
 class ItemViewModel constructor(private val mainRepository: ItemRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<String>()
-    //lateinit var itemList: LiveData<PagingData<Item>>
     private var query: String = ""
 
     fun getItemList(): LiveData<PagingData<Item>> {
-        //itemList = mainRepository.getAllItems(query).cachedIn(viewModelScope)
         return mainRepository.getAllItems(query).cachedIn(viewModelScope)
     }
 
