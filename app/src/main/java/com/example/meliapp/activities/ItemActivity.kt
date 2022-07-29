@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.meliapp.R
 import com.example.meliapp.databinding.ActivityItemBinding
 
+//Actividad para visualizar un producto, los datos vienen por parametro.
+//TODO Utilizar el servicio /items?ids=$ITEM_ID1 para traer toda la info del producto
 class ItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityItemBinding
@@ -39,6 +41,7 @@ class ItemActivity : AppCompatActivity() {
                 .load(itemImage)
                 .into(binding.ivItemImage)
         } else {
+            //Todo Buscar una imagen adecuada para productos sin foto.
             binding.ivItemImage.setImageResource(R.drawable.ic_launcher_background)
         }
 

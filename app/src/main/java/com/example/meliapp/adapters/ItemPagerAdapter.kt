@@ -51,8 +51,8 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
 
             val priceStr = item.price.toString()
 
+            //TODO formatear numero para que numeros grandes no se vean con notacion Exponencial.
             price.setText(item.currency_id + " " + priceStr)
-
             itemView.setOnClickListener { listener.onItemClick(item) }
 
             val media = item.thumbnail
