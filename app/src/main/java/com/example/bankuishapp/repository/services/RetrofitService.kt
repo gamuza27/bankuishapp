@@ -1,25 +1,24 @@
-package com.example.meliapp.interfaces
+package com.example.bankuishapp.repository.services
 
 
-import ItemResponse
+import com.example.bankuishapp.repository.entities.Root
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RetrofitService {
 
 
     //todo Traer solo los atributos que se van a utilizar, pasandolos por paramtro ?atributes=.
-    @GET("sites/{siteId}/search")
-    suspend fun getItemsPaging(@Path("siteId") id: String?, @Query("q") param1 : String?,
-                       @Query("offset") offset : Int?, @Query("limit") limit : Int?) : Response<ItemResponse>
+    @GET("search/repositories")
+    suspend fun getItemsPaging(@Query("q") param1 : String?,
+                       @Query("page") offset : Int?, @Query("per_page") limit : Int?) : Response<Root>
 
     companion object {
 
-        var BASE_URL = "https://api.mercadolibre.com/"
+        var BASE_URL = "https://api.github.com/"
 
         var retrofitService: RetrofitService? = null
         fun getInstance() : RetrofitService {

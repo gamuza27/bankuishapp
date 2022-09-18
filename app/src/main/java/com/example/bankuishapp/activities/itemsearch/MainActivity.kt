@@ -1,17 +1,9 @@
-package com.example.meliapp.activities
+package com.example.bankuishapp.activities.itemsearch
 
-import ITEM_CURRENCY
-import ITEM_PRICE
-import ITEM_QUANTITY
-import ITEM_THUMBNAIL
-import ITEM_TITLE
-import Item
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -19,17 +11,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.meliapp.*
-import com.example.meliapp.adapters.ItemPagerAdapter
-import com.example.meliapp.databinding.ActivityMainBinding
-import com.example.meliapp.interfaces.RetrofitService
-import com.example.meliapp.repositories.ItemRepository
-import com.example.meliapp.viewModels.ItemViewModel
-import com.example.meliapp.viewModels.ItemViewModelFactory
+import com.example.bankuishapp.*
+import com.example.bankuishapp.activities.itemsearch.ItemActivity.Companion.ITEM_DESC
+import com.example.bankuishapp.activities.itemsearch.ItemActivity.Companion.ITEM_IMAGE
+import com.example.bankuishapp.activities.itemsearch.ItemActivity.Companion.ITEM_NAME
+import com.example.bankuishapp.activities.itemsearch.ItemActivity.Companion.ITEM_URL
+import com.example.bankuishapp.activities.itemsearch.adapters.ItemPagerAdapter
+import com.example.bankuishapp.repository.entities.Item
+import com.example.bankuishapp.databinding.ActivityMainBinding
+import com.example.bankuishapp.activities.itemsearch.viewModels.ItemViewModel
+import com.example.bankuishapp.activities.itemsearch.viewModels.ItemViewModelFactory
 import kotlinx.coroutines.launch
 
-//Para este ejercicio se deja como constante el ID del sitio.
-const val SITE_ID = "MLA"
+
 const val LOG_APP = "LogApp"
 
 class MainActivity : AppCompatActivity(),
@@ -40,49 +34,39 @@ class MainActivity : AppCompatActivity(),
     private lateinit var itemViewModel: ItemViewModel
     private lateinit var itemAdapter: ItemPagerAdapter
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
 
         initPagerRecyclerView()
+        doSearchForKotlin()
+    }
 
+
+    private fun doSearchForKotlin() {
+        binding.svItems.setQuery("kotlin", true);
     }
 
     private fun initPagerRecyclerView() {
 
         itemAdapter = ItemPagerAdapter(this)
 
-        val retrofitService = RetrofitService.getInstance()
-        val mainRepository = ItemRepository(retrofitService)
-
         binding.rvItems.layoutManager = LinearLayoutManager(this)
         binding.rvItems.adapter = itemAdapter
         binding.svItems.setOnQueryTextListener(this)
         binding.progressbar.isVisible = false
 
+        binding.swipe.setOnRefreshListener {
+
+            binding.swipe.isRefreshing = false
+            doItemsSearch()
+        }
+
         itemViewModel = ViewModelProvider(
             this,
-            ItemViewModelFactory(mainRepository)
+            ItemViewModelFactory()
         ).get(ItemViewModel::class.java)
 
 
@@ -157,12 +141,10 @@ class MainActivity : AppCompatActivity(),
 
         val intent = Intent (this, ItemActivity::class.java)
 
-        intent.putExtra(ITEM_TITLE, item?.title)
-        intent.putExtra(ITEM_PRICE, item?.price.toString())
-        intent.putExtra(ITEM_CURRENCY, item?.currency_id.toString())
-        intent.putExtra(ITEM_QUANTITY, item?.available_quantity.toString())
-        intent.putExtra(ITEM_THUMBNAIL, item?.thumbnail)
-
+        intent.putExtra(ITEM_NAME, item?.name)
+        intent.putExtra(ITEM_DESC, item?.description)
+        intent.putExtra(ITEM_IMAGE, item?.owner?.avatar_url)
+        intent.putExtra(ITEM_URL, item?.url)
         startActivity(intent)
     }
 

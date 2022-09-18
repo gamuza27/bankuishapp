@@ -1,14 +1,13 @@
-package com.example.meliapp.viewModels
+package com.example.bankuishapp.activities.itemsearch.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.meliapp.repositories.ItemRepository
 
-class ItemViewModelFactory constructor(private val repository: ItemRepository): ViewModelProvider.Factory {
+class ItemViewModelFactory constructor(/*private val repository: ItemRepository*/): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
-            ItemViewModel(this.repository) as T
+            ItemViewModel() as T
         } else {
             throw IllegalArgumentException("ViewModel Not Found")
         }

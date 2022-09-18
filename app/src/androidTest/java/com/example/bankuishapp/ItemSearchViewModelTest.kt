@@ -1,9 +1,9 @@
-package com.example.meliapp
+package com.example.bankuishapp
 
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.meliapp.viewModels.ItemViewModel
+import com.example.bankuishapp.activities.itemsearch.viewModels.ItemViewModel
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test

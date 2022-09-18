@@ -1,4 +1,4 @@
-package com.example.meliapp
+package com.example.bankuishapp
 
 import org.junit.Test
 

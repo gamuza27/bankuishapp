@@ -1,17 +1,18 @@
-package com.example.meliapp.repositories
+package com.example.bankuishapp.repository
 
-import Item
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.example.meliapp.auxiliars.ItemPagingSource
-import com.example.meliapp.interfaces.RetrofitService
+import com.example.bankuishapp.repository.entities.Item
+import com.example.bankuishapp.repository.services.RetrofitService
 
 const val NETWORK_PAGE_SIZE = 50
 
-class ItemRepository constructor(private val retrofitService: RetrofitService) {
+class ItemRepository constructor() {
+
+    private val retrofitService = RetrofitService.getInstance()
 
     fun getAllItems(query: String): LiveData<PagingData<Item>> {
 

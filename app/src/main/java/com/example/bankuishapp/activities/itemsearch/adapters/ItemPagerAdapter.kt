@@ -1,6 +1,5 @@
-package com.example.meliapp.adapters
+package com.example.bankuishapp.activities.itemsearch.adapters
 
-import Item
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,9 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.meliapp.R
+
+import com.example.bankuishapp.R
+import com.example.bankuishapp.repository.entities.Item
 
 class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<Item, ItemPagerAdapter.ItemViewHolder>(
     ItemComparator
@@ -19,7 +20,6 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
     interface OnItemPagerClickListener {
         fun onItemClick(item: Item?)
     }
-
 
     private val listener: OnItemPagerClickListener
 
@@ -47,15 +47,15 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
         private val image: ImageView = itemView.findViewById<View>(R.id.ivItem) as ImageView
 
         fun bind(item: Item, listener: OnItemPagerClickListener) {
-            name.setText(item.title)
+            name.setText(item.name)
 
-            val priceStr = item.price.toString()
+            val priceStr = item.forks_count.toString()
 
             //TODO formatear numero para que numeros grandes no se vean con notacion Exponencial.
-            price.setText(item.currency_id + " " + priceStr)
+            price.setText(item.description + " " + priceStr)
             itemView.setOnClickListener { listener.onItemClick(item) }
 
-            val media = item.thumbnail
+            val media = item.owner.avatar_url
 
             if (media !== null) {
                 Glide.with(itemView.context)
@@ -75,7 +75,7 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
         }
 
         override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
     }
 }

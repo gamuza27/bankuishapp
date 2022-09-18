@@ -1,0 +1,1 @@
+When executing the app, the repository search screen starts. By default, the kotlin language is searched. The searchview can be used to perform other searches. Swiping down refreshes the list of items. Touching an item opens another screen where more detail about the item is shown. For this exercise only a few data are shown.

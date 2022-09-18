@@ -1,12 +1,9 @@
-package com.example.meliapp.auxiliars
-
-import Item
+package com.example.bankuishapp.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.meliapp.activities.SITE_ID
-import com.example.meliapp.interfaces.RetrofitService
-import com.example.meliapp.repositories.NETWORK_PAGE_SIZE
+import com.example.bankuishapp.repository.entities.Item
+import com.example.bankuishapp.repository.services.RetrofitService
 import java.lang.Exception
 
 class ItemPagingSource(query: String, private val apiService: RetrofitService): PagingSource<Int, Item>() {
@@ -17,9 +14,9 @@ class ItemPagingSource(query: String, private val apiService: RetrofitService): 
 
         return try {
             val position = params.key ?: 1
-            val response = apiService.getItemsPaging(SITE_ID, quertyStr,position*((position-1)*50), NETWORK_PAGE_SIZE)
+            val response = apiService.getItemsPaging( quertyStr,position/**((position-1)*50)*/, NETWORK_PAGE_SIZE)
 
-            LoadResult.Page(data = response.body()!!.results, prevKey = if (position == 1) null else position - 1,
+            LoadResult.Page(data = response.body()!!.items, prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1)
         } catch (e: Exception) {
             LoadResult.Error(e)
