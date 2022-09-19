@@ -14,7 +14,7 @@ class ItemPagingSource(query: String, private val apiService: RetrofitService): 
 
         return try {
             val position = params.key ?: 1
-            val response = apiService.getItemsPaging( quertyStr,position/**((position-1)*50)*/, NETWORK_PAGE_SIZE)
+            val response = apiService.getItemsPaging( quertyStr,position, NETWORK_PAGE_SIZE)
 
             LoadResult.Page(data = response.body()!!.items, prevKey = if (position == 1) null else position - 1,
                 nextKey = position + 1)

@@ -42,7 +42,6 @@ class ItemActivity : AppCompatActivity() {
                 .load(itemImage)
                 .into(binding.ivItemImage)
         } else {
-            //Todo Buscar una imagen adecuada para productos sin foto.
             binding.ivItemImage.setImageResource(R.drawable.ic_github_ic)
         }
 

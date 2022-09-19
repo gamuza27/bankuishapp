@@ -43,7 +43,7 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.findViewById<View>(R.id.tvTitleItem) as TextView
-        private val price: TextView = itemView.findViewById<View>(R.id.tvPriceItem) as TextView
+        private val description: TextView = itemView.findViewById<View>(R.id.tvDescItem) as TextView
         private val image: ImageView = itemView.findViewById<View>(R.id.ivItem) as ImageView
 
         fun bind(item: Item, listener: OnItemPagerClickListener) {
@@ -51,8 +51,7 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
 
             val priceStr = item.forks_count.toString()
 
-            //TODO formatear numero para que numeros grandes no se vean con notacion Exponencial.
-            price.setText(item.description + " " + priceStr)
+            description.setText(item.description + " " + priceStr)
             itemView.setOnClickListener { listener.onItemClick(item) }
 
             val media = item.owner.avatar_url
@@ -70,7 +69,6 @@ class ItemPagerAdapter(listener: OnItemPagerClickListener): PagingDataAdapter<It
 
     object ItemComparator: DiffUtil.ItemCallback<Item>() {
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-            // Id is unique.
             return oldItem.id == newItem.id
         }
 
