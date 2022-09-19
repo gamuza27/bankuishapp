@@ -6,8 +6,7 @@ import com.bumptech.glide.Glide
 import com.example.bankuishapp.R
 import com.example.bankuishapp.databinding.ActivityItemBinding
 
-//Actividad para visualizar un producto, los datos vienen por parametro.
-//TODO Utilizar el servicio /items?ids=$ITEM_ID1 para traer toda la info del producto
+
 class ItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityItemBinding

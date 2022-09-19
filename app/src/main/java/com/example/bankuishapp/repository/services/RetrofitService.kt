@@ -10,8 +10,6 @@ import retrofit2.http.Query
 
 interface RetrofitService {
 
-
-    //todo Traer solo los atributos que se van a utilizar, pasandolos por paramtro ?atributes=.
     @GET("search/repositories")
     suspend fun getItemsPaging(@Query("q") param1 : String?,
                        @Query("page") offset : Int?, @Query("per_page") limit : Int?) : Response<Root>

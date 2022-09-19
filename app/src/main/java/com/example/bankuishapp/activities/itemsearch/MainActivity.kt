@@ -24,8 +24,6 @@ import com.example.bankuishapp.activities.itemsearch.viewModels.ItemViewModelFac
 import kotlinx.coroutines.launch
 
 
-const val LOG_APP = "LogApp"
-
 class MainActivity : AppCompatActivity(),
     androidx.appcompat.widget.SearchView.OnQueryTextListener,
     ItemPagerAdapter.OnItemPagerClickListener {
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity(),
 
 
     private fun doSearchForKotlin() {
-        binding.svItems.setQuery("kotlin", true);
+        binding.svItems.setQuery("language:kotlin", true);
     }
 
     private fun initPagerRecyclerView() {
@@ -92,7 +90,6 @@ class MainActivity : AppCompatActivity(),
                 errorState?.let {
 
                     Toast.makeText(this, R.string.ErrorBusqueda, Toast.LENGTH_LONG).show()
-                    Log.i(LOG_APP,it.error.toString())
 
                 }
             }
